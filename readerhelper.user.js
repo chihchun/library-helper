@@ -9,6 +9,7 @@
 // @match        https://books.google.com.tw/books*
 // @match        https://www.kobo.com/tw/zh/ebook*
 // @match        https://www.taaze.tw/goods/*
+// @match        https://www.taaze.tw/usedList.html?oid=*
 // @match        https://www.goodreads.com/book/show/*
 // @match        https://play.google.com/store/books/details/*
 // @match        https://www.amazon.cn/gp/product/*
@@ -53,6 +54,7 @@ books.google.com.tw:
     metadata:
         title: "//meta[@property='og:title']/@content"
         authors: "//a[contains(@href,'q=inauthor')]"
+
 goodreads.com:
         matches:
             - "https://www.goodreads.com/book/show/*"
@@ -65,7 +67,7 @@ goodreads.com:
 kobo.com:
     matches:
         - "https://www.kobo.com/tw/zh/ebook*"
-    type: 'XPATH'
+    type: 'JSON-LD'
     metadata:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
@@ -90,9 +92,17 @@ taaze.tw:
         - "https://www.taaze.tw/goods/*"
     type: 'XPATH'
     metadata:
-        title: "//meta[@name='title']/@content"
+        title: "//div[contains(@class, 'mBody')]//h1"
+        origtitle: "//div[contains(@class, 'mBody')]//h2"
         isbn: "//meta[@property='books:isbn']/@content"
         authors: "//div[@class='authorBrand']//a[contains(@href,'rwd_searchResult.html?keyType%5B%5D=2')]"
+taaze.tw/used:
+    matches:
+    - "https://www.taaze.tw/usedList.html*"
+    type: 'XPATH'
+    metadata:
+        origtitle: "//div[contains(@class, 'hide')]//div[@class='title-next']"
+        authors: "//a[contains(@href,'rwd_searchResult.html?keyType%5B%5D=2')]"
 
 tpml.edu.tw:
     matches:
@@ -101,6 +111,7 @@ tpml.edu.tw:
     metadata:
         title: "//h3"
         authors: "//a[contains(@href,'search_field=PN')]"
+
 `;
     var search_yaml = `
 "博客來": "https://search.books.com.tw/search/query/key/"
@@ -113,6 +124,7 @@ tpml.edu.tw:
 "讀冊": "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
 "Readmoo": "https://share.readmoo.com/search/keyword?q="
 `;
+
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
 
 
@@ -123,17 +135,32 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
         var data = {};
 
         // parse the ld+json
-        var json = evaluate('//script[@type="application/ld+json"]');
-        if(json.length > 0) {
-            var ld = JSON.parse(json);
-            console.log(ld);
-            if(ld['@type'] == "Book") {
-                data['title'] = [ld['name']];
-                data['authors'] = [];
-                ld['author'].forEach(function (author) {
-                    data['authors'].push(author['name']);
-                })
-            }
+        var jsons = evaluate('//script[@type="application/ld+json"]');
+        if(jsons.length > 0) {
+            jsons.forEach(function(json) {
+                var ld = JSON.parse(json);
+                if(ld['@type'] == "Book") {
+                    data['title'] = [ld['name']];
+
+                    if(ld['isbn'] != undefined) {
+                        data['isbn']= [ld['isbn']];
+                    }
+                    if(ld['workExample'] != undefined) {
+                       data['isbn']= [ld['workExample']['isbn']];
+                    }
+
+                    data['authors'] = [];
+                    if(ld['author'] != undefined) {
+                        if(Array.isArray(ld['author'])) {
+                            ld['author'].forEach(function (author) {
+                                data['authors'].push(author['name']);
+                            })
+                        } else {
+                            data['authors'].push(ld['author']['name']);
+                        }
+                    }
+                }
+            })
         }
 
         // parse the metadata by xpath
