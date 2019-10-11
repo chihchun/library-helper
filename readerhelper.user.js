@@ -12,6 +12,7 @@
 // @match        https://www.goodreads.com/book/show/*
 // @match        https://play.google.com/store/books/details/*
 // @match        https://www.amazon.cn/gp/product/*
+// @match        https://share.readmoo.com/book/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -69,19 +70,20 @@ kobo.com:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
 
-kobo.com:
-    matches:
-        - "https://www.kobo.com/tw/zh/ebook*"
-    type: 'XPATH'
-    metadata:
-        title: '//span[@class="title product-field"]'
-        authors: '//a[@class="contributor-name"]'
-
 play.google.com:
     matches:
         - "https://play.google.com/store/books/details/*"
     type: 'JSON-LD'
     metadata:
+
+readmoo.com:
+    matches:
+        - "https://share.readmoo.com/book/*"
+    type: 'XPATH'
+    metadata:
+        title: "//h2"
+        isbn: "//span[@itemprop='ISBN']"
+        authors: "//span[@itemprop='name']/a"
 
 taaze.tw:
     matches:
@@ -100,18 +102,19 @@ tpml.edu.tw:
         title: "//h3"
         authors: "//a[contains(@href,'search_field=PN')]"
 `;
-
+    var search_yaml = `
+"博客來": "https://search.books.com.tw/search/query/key/"
+"Kobo": "https://www.kobo.com/tw/zh/search?query="
+"GooglePlay": "https://play.google.com/store/search?c=books&q="
+"AmazonCN": "https://www.amazon.cn/s?rh=n%3A116169071&k="
+"Goodreads": "https://www.goodreads.com/search?q="
+"TPML": "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
+"Google": "https://www.google.com/search?tbm=bks&q="
+"讀冊": "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
+"Readmoo": "https://share.readmoo.com/search/keyword?q="
+`;
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
-var urlsforsearch = {
-    "博客來": "https://search.books.com.tw/search/query/key/",
-    "Kobo": "https://www.kobo.com/tw/zh/search?query=",
-    "GooglePlay": "https://play.google.com/store/search?c=books&q=",
-    "AmazonCN": "https://www.amazon.cn/s?rh=n%3A116169071&k=",
-    "Goodreads": "https://www.goodreads.com/search?q=",
-    "TPML": "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input=",
-    "Google": "https://www.google.com/search?tbm=bks&q=",
-    "讀冊": "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
-};
+
 
     parse_metadata();
 
@@ -149,6 +152,7 @@ var urlsforsearch = {
         // Links to other websites
         if(Object.keys(data).length > 0) {
             var dialog = inject();
+            var urlsforsearch = jsyaml.load(search_yaml);
             for (var service in urlsforsearch) {
                 var url = urlsforsearch[service];
                 var html = `<div>${service}: `;
