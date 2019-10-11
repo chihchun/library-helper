@@ -23,6 +23,15 @@
     'use strict';
 
     var metadata_yaml = `
+amazon.cn:
+    matches:
+        - "https://www.amazon.cn/gp/product/*"
+    type: 'XPATH'
+    metadata:
+        title: "//span[@id='ebooksProductTitle']"
+        authors: "//span[contains(@class,'author')]/a"
+        asin: "//form[@id='sendSample']/input[@name='ASIN.0']/@value"
+
 books.com.tw:
     matches: 
         - "https://www.books.com.tw/products/*"
@@ -35,13 +44,7 @@ books.com.tw:
         sellingprice: "//b[@itemprop='price']"
         authors: "//a[contains(@href,'adv_author')]"
         publishdate: "//li[contains(text(),'出版日期')]"
-tpml.edu.tw:
-    matches: 
-        - "http://book.tpml.edu.tw/webpac/bookDetail.do*"
-    type: 'XPATH'
-    metadata:
-        title: "//h3"
-        authors: "//a[contains(@href,'search_field=PN')]"
+
 books.google.com.tw:
     matches:
         - "https://books.google.com.tw/books/*"
@@ -49,6 +52,15 @@ books.google.com.tw:
     metadata:
         title: "//meta[@property='og:title']/@content"
         authors: "//a[contains(@href,'q=inauthor')]"
+goodreads.com:
+        matches:
+            - "https://www.goodreads.com/book/show/*"
+        type: 'XPATH'
+        metadata:
+            title: "//meta[@property='og:title']/@content"
+            authors: "//a[@class='authorName']/span[@itemprop='name']"
+            isdn: "//meta[@property='books:isbn']/@content"
+
 kobo.com:
     matches:
         - "https://www.kobo.com/tw/zh/ebook*"
@@ -56,6 +68,21 @@ kobo.com:
     metadata:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
+
+kobo.com:
+    matches:
+        - "https://www.kobo.com/tw/zh/ebook*"
+    type: 'XPATH'
+    metadata:
+        title: '//span[@class="title product-field"]'
+        authors: '//a[@class="contributor-name"]'
+
+play.google.com:
+    matches:
+        - "https://play.google.com/store/books/details/*"
+    type: 'JSON-LD'
+    metadata:
+
 taaze.tw:
     matches:
         - "https://www.taaze.tw/goods/*"
@@ -64,27 +91,14 @@ taaze.tw:
         title: "//meta[@name='title']/@content"
         isbn: "//meta[@property='books:isbn']/@content"
         authors: "//div[@class='authorBrand']//a[contains(@href,'rwd_searchResult.html?keyType%5B%5D=2')]"
-goodreads.com:
+
+tpml.edu.tw:
     matches:
-        - "https://www.goodreads.com/book/show/*"
+        - "http://book.tpml.edu.tw/webpac/bookDetail.do*"
     type: 'XPATH'
     metadata:
-        title: "//meta[@property='og:title']/@content"
-        authors: "//a[@class='authorName']/span[@itemprop='name']"
-        isdn: "//meta[@property='books:isbn']/@content"
-play.google.com:
-    matches:
-        - "https://play.google.com/store/books/details/*"
-    type: 'JSON-LD'
-    metadata:
-amazon.cn:
-    matches:
-        - "https://www.amazon.cn/gp/product/*"
-    type: 'XPATH'
-    metadata:
-        title: "//span[@id='ebooksProductTitle']"
-        authors: "//span[contains(@class,'author')]/a"
-        asin: "//form[@id='sendSample']/input[@name="ASIN.0"]/@value"
+        title: "//h3"
+        authors: "//a[contains(@href,'search_field=PN')]"
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
