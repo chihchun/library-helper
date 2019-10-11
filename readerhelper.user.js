@@ -18,8 +18,8 @@
 
 (function() {
     'use strict';
-    
-    var yaml = `
+
+    var metadata_yaml = `
 books.com.tw:
     matches: 
         - "https://www.books.com.tw/products/*"
@@ -59,7 +59,7 @@ taaze.tw:
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn'];
-var urls = {
+var urlsforsearch = {
     "博客來": "https://search.books.com.tw/search/query/key/",
     "Kobo": "https://www.kobo.com/tw/zh/search?query=",
     "GooglePlay": "https://play.google.com/store/search?c=books&q=",
@@ -73,7 +73,7 @@ var urls = {
     parse_metadata();
 
     function parse_metadata() {
-        var rules = jsyaml.load(yaml);
+        var rules = jsyaml.load(metadata_yaml);
         var data = {};
 
         // parse the metadata
@@ -92,8 +92,8 @@ var urls = {
         // Links to other websites
         if(Object.keys(data).length > 0) {
             var dialog = inject();
-            for (var service in urls) {
-                var url = urls[service];
+            for (var service in urlsforsearch) {
+                var url = urlsforsearch[service];
                 var html = `<div>${service}: `;
                 keywords.forEach(function(key) {
                     if(data[key] != undefined) {
