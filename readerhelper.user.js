@@ -7,6 +7,8 @@
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
 // @match        https://book.douban.com/subject/*
 // @match        https://books.google.com.tw/books*
+// @match        https://books.google.com/books*
+// @match        https://books.google.fr/books*
 // @match        https://play.google.com/store/books/details/*
 // @match        https://share.readmoo.com/book/*
 // @match        https://readmoo.com/book/*
@@ -16,9 +18,10 @@
 // @match        https://www.amazon.com/gp/product/*
 // @match        https://www.books.com.tw/products/*
 // @match        https://www.goodreads.com/book/show/*
-// @match        https://www.kobo.com/tw/zh/ebook*
+// @match        https://www.kobo.com/*/ebook*
 // @match        https://www.taaze.tw/goods/*
 // @match        https://www.taaze.tw/usedList.html?oid=*
+// @match        https://www.babelio.com/livres/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -57,6 +60,14 @@ amazon.cn:
         authors: "//span[contains(@class,'author')]/a"
         asin: "//form[@id='sendSample']/input[@name='ASIN.0']/@value"
 
+babelio.com:
+    matches:
+        - "https://www.babelio.com/livres/*"
+    type: 'XPATH'
+    metadata:
+        title: "//h1"
+        authors: "//span[@itemprop='name']"
+
 books.com.tw:
     matches: 
         - "https://www.books.com.tw/products/*"
@@ -73,6 +84,8 @@ books.com.tw:
 books.google.com.tw:
     matches:
         - "https://books.google.com.tw/books/*"
+        - "https://books.google.com/books/*"
+        - "https://books.google.fr/books/*"
     type: 'XPATH'
     metadata:
         title: "//meta[@property='og:title']/@content"
@@ -90,7 +103,7 @@ goodreads.com:
 
 kobo.com:
     matches:
-        - "https://www.kobo.com/tw/zh/ebook*"
+        - "https://www.kobo.com/*"
     type: 'JSON-LD'
     metadata:
         title: '//span[@class="title product-field"]'
