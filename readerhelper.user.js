@@ -4,20 +4,21 @@
 // @version      1.1
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
-// @match        https://www.books.com.tw/products/*
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
+// @match        https://book.douban.com/subject/*
 // @match        https://books.google.com.tw/books*
+// @match        https://play.google.com/store/books/details/*
+// @match        https://share.readmoo.com/book/*
+// @match        https://readmoo.com/book/*
+// @match        https://www.amazon.cn/dp/*
+// @match        https://www.amazon.cn/gp/product/*
+// @match        https://www.amazon.com/*/dp/*
+// @match        https://www.amazon.com/gp/product/*
+// @match        https://www.books.com.tw/products/*
+// @match        https://www.goodreads.com/book/show/*
 // @match        https://www.kobo.com/tw/zh/ebook*
 // @match        https://www.taaze.tw/goods/*
 // @match        https://www.taaze.tw/usedList.html?oid=*
-// @match        https://www.goodreads.com/book/show/*
-// @match        https://play.google.com/store/books/details/*
-// @match        https://www.amazon.cn/gp/product/*
-// @match        https://www.amazon.cn/dp/*
-// @match        https://share.readmoo.com/book/*
-// @match        https://book.douban.com/subject/*
-// @match        https://www.amazon.com/*/dp/*
-// @match        https://www.amazon.com/gp/product/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -104,6 +105,7 @@ play.google.com:
 readmoo.com:
     matches:
         - "https://share.readmoo.com/book/*"
+        - "https://readmoo.com/book/*"
     type: 'XPATH'
     metadata:
         title: "//h2"
