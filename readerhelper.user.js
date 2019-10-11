@@ -13,6 +13,7 @@
 // @match        https://www.goodreads.com/book/show/*
 // @match        https://play.google.com/store/books/details/*
 // @match        https://www.amazon.cn/gp/product/*
+// @match        https://www.amazon.cn/dp/*
 // @match        https://share.readmoo.com/book/*
 // @match        https://book.douban.com/subject/*
 // @grant        none
@@ -29,6 +30,7 @@
 amazon.cn:
     matches:
         - "https://www.amazon.cn/gp/product/*"
+        - "https://www.amazon.cn/dp/*"
     type: 'XPATH'
     metadata:
         title: "//span[@id='ebooksProductTitle']"
