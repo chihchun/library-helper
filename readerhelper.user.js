@@ -86,6 +86,7 @@ goodreads.com:
             title: "//meta[@property='og:title']/@content"
             authors: "//a[@class='authorName']/span[@itemprop='name']"
             isbn: "//meta[@property='books:isbn']/@content"
+            rating: "//span[@itemprop='ratingValue']"
 
 kobo.com:
     matches:
@@ -306,7 +307,7 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
     function evaluate(xpath, doc = document.documentElement) {
         var evaluator = new XPathEvaluator(); 
         var result = evaluator.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
-        var node = null;
+        var node = undefined;
         var texts = [];
 
         while(node = result.iterateNext()) {
@@ -317,7 +318,7 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             } else {
                 text = node.innerText;
             }
-            if(text == undefined) {
+            if(text == undefined || text == 'null') {
                 console.error(xpath + " not found on " + document.URL);
                 continue;
             }
