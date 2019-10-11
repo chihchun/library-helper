@@ -10,6 +10,7 @@
 // @match        https://www.kobo.com/tw/zh/ebook*
 // @match        https://www.taaze.tw/goods/*
 // @match        https://www.goodreads.com/book/show/*
+// @match        https://play.google.com/store/books/details/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -24,6 +25,7 @@
 books.com.tw:
     matches: 
         - "https://www.books.com.tw/products/*"
+    type: 'XPATH'
     metadata:
         title: "//h1"
         origtitle: "//h2/a[contains(@href,'https://search.books.com.tw/search/query/cat/all/key')]"
@@ -35,24 +37,28 @@ books.com.tw:
 tpml.edu.tw:
     matches: 
         - "http://book.tpml.edu.tw/webpac/bookDetail.do*"
+    type: 'XPATH'
     metadata:
         title: "//h3"
         authors: "//a[contains(@href,'search_field=PN')]"
 books.google.com.tw:
     matches:
         - "https://books.google.com.tw/books/*"
+    type: 'XPATH'
     metadata:
         title: "//meta[@property='og:title']/@content"
         authors: "//a[contains(@href,'q=inauthor')]"
 kobo.com:
     matches:
         - "https://www.kobo.com/tw/zh/ebook*"
+    type: 'XPATH'
     metadata:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
 taaze.tw:
     matches:
         - "https://www.taaze.tw/goods/*"
+    type: 'XPATH'
     metadata:
         title: "//meta[@name='title']/@content"
         isbn: "//meta[@property='books:isbn']/@content"
@@ -60,10 +66,16 @@ taaze.tw:
 goodreads.com:
     matches:
         - "https://www.goodreads.com/book/show/*"
+    type: 'XPATH'
     metadata:
         title: "//meta[@property='og:title']/@content"
         authors: "//a[@class='authorName']/span[@itemprop='name']"
         isdn: "//meta[@property='books:isbn']/@content"
+play.google.com:
+    matches:
+        - "https://play.google.com/store/books/details/*"
+    type: 'JSON-LD'
+    metadata:
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn'];
@@ -84,7 +96,21 @@ var urlsforsearch = {
         var rules = jsyaml.load(metadata_yaml);
         var data = {};
 
-        // parse the metadata
+        // parse the ld+json
+        var json = evaluate('//script[@type="application/ld+json"]');
+        if(json.length > 0) {
+            var ld = JSON.parse(json);
+            console.log(ld);
+            if(ld['@type'] == "Book") {
+                data['title'] = [ld['name']];
+                data['authors'] = [];
+                ld['author'].forEach(function (author) {
+                    data['authors'].push(author['name']);
+                })
+            }
+        }
+
+        // parse the metadata by xpath
         for (var domain in rules) {
             rules[domain]['matches'].forEach(function (match) {
                 if(document.URL.match(match)) {
