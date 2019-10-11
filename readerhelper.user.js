@@ -40,9 +40,9 @@ tpml.edu.tw:
         authors: "//a[contains(@href,'search_field=PN')]"
 books.google.com.tw:
     matches:
-        - "https://books.google.com.tw/books*"
+        - "https://books.google.com.tw/books/*"
     metadata:
-        title: '//h1[@class="booktitle"]/span[@class="fn"]'
+        title: "//meta[@property='og:title']/@content"
         authors: "//a[contains(@href,'q=inauthor')]"
 kobo.com:
     matches:
