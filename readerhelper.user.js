@@ -132,7 +132,7 @@ var urlsforsearch = {
   div.libraryhelper {
     color: blueviolet;
     border: 1px solid #d3d3d3;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.6);
 
     position: fixed;
     top: 150px;
