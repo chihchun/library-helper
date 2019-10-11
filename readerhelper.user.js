@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://greasyfork.org/en/users/263753-chihchun
-// @version      1.0
+// @version      1.1
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        https://www.books.com.tw/products/*
@@ -16,6 +16,8 @@
 // @match        https://www.amazon.cn/dp/*
 // @match        https://share.readmoo.com/book/*
 // @match        https://book.douban.com/subject/*
+// @match        https://www.amazon.com/*/dp/*
+// @match        https://www.amazon.com/gp/product/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -27,6 +29,23 @@
     'use strict';
 
     var metadata_yaml = `
+amazon.com:
+    matches:
+        - https://www.amazon.com/gp/product/*
+    type: 'XPATH'
+    metadata:
+        title: "//span[@id='ebooksProductTitle']"
+        authors: "//span[contains(@data-a-popover, 'Author Dialog')]/a"
+        asin: "//form[@id='sendSample']/input[@name='ASIN.0']/@value"
+amazon.com/dp:
+    matches:
+    - https://www.amazon.com/*
+    type: 'XPATH'
+    metadata:
+        title: "//span[@id='ebooksProductTitle']"
+        authors: //span[contains(@class, 'author')]/a
+        asin: "//form[@id='sendSample']/input[@name='ASIN.0']/@value"
+
 amazon.cn:
     matches:
         - "https://www.amazon.cn/gp/product/*"
@@ -128,6 +147,7 @@ Google: "https://www.google.com/search?tbm=bks&q="
 TPML: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
 讀冊: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
 Readmoo: "https://share.readmoo.com/search/keyword?q="
+Amazon: "https://www.amazon.com/s?i=digital-text&k="
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];

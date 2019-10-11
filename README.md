@@ -4,6 +4,7 @@
 
 目前支援
 
+- [Amazon.com](https://www.amazon.com/)
 - [Goodreads](https://www.goodreads.com/)
 - [Google Play](https://play.google.com/store?hl=en)
 - [Google 圖書](https://books.google.com.tw/)
