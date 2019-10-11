@@ -14,6 +14,7 @@
 // @match        https://play.google.com/store/books/details/*
 // @match        https://www.amazon.cn/gp/product/*
 // @match        https://share.readmoo.com/book/*
+// @match        https://book.douban.com/subject/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -114,15 +115,16 @@ tpml.edu.tw:
 
 `;
     var search_yaml = `
-"博客來": "https://search.books.com.tw/search/query/key/"
-"Kobo": "https://www.kobo.com/tw/zh/search?query="
-"GooglePlay": "https://play.google.com/store/search?c=books&q="
-"AmazonCN": "https://www.amazon.cn/s?rh=n%3A116169071&k="
-"Goodreads": "https://www.goodreads.com/search?q="
-"TPML": "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
-"Google": "https://www.google.com/search?tbm=bks&q="
-"讀冊": "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
-"Readmoo": "https://share.readmoo.com/search/keyword?q="
+博客來: "https://search.books.com.tw/search/query/key/"
+Kobo: "https://www.kobo.com/tw/zh/search?query="
+GooglePlay: "https://play.google.com/store/search?c=books&q="
+AmazonCN: "https://www.amazon.cn/s?rh=n%3A116169071&k="
+豆瓣: "https://search.douban.com/book/subject_search?search_text="
+Goodreads: "https://www.goodreads.com/search?q="
+Google: "https://www.google.com/search?tbm=bks&q="
+TPML: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
+讀冊: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
+Readmoo: "https://share.readmoo.com/search/keyword?q="
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
@@ -139,13 +141,15 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
         if(jsons.length > 0) {
             jsons.forEach(function(json) {
                 var ld = JSON.parse(json);
+                console.debug(ld);
                 if(ld['@type'] == "Book") {
                     data['title'] = [ld['name']];
 
                     if(ld['isbn'] != undefined) {
                         data['isbn']= [ld['isbn']];
                     }
-                    if(ld['workExample'] != undefined) {
+
+                    if(ld['workExample'] != undefined && ld['workExample']['isbn'] != undefined ) {
                        data['isbn']= [ld['workExample']['isbn']];
                     }
 
@@ -178,6 +182,7 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
 
         // Links to other websites
         if(Object.keys(data).length > 0) {
+            console.debug(data);
             var dialog = inject();
             var urlsforsearch = jsyaml.load(search_yaml);
             for (var service in urlsforsearch) {
