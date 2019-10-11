@@ -17,4 +17,6 @@
 - [臺北市立圖書館館藏查詢系統](http://book.tpml.edu.tw/webpac/webpacIndex.jsp)
 - [豆瓣读书](https://book.douban.com/)
 
-安裝 https://greasyfork.org/en/scripts/391010-library-helper
+安裝 
+- https://greasyfork.org/en/scripts/391010-library-helper
+- https://github.com/chihchun/library-helper/raw/master/readerhelper.user.js
