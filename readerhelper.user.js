@@ -10,7 +10,7 @@
 // @match        https://www.kobo.com/tw/zh/ebook*
 // @match        https://www.taaze.tw/goods/*
 // @grant        none
-// @require      https://raw.githubusercontent.com/nodeca/js-yaml/master/dist/js-yaml.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
 // ==/UserScript==
 
