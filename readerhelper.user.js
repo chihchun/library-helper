@@ -211,8 +211,6 @@ AmazonCN:
 豆瓣:
     url: "https://search.douban.com/book/subject_search?search_text="
     languages:
-        - "en"
-        - "en-US"
         - "zh"
         - "zh-TW"
         - "zh-HK"
@@ -257,8 +255,6 @@ TPML:
 讀冊:
     url: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
     languages:
-        - "en"
-        - "en-US"
         - "zh"
         - "zh-TW"
         - "zh-HK"
@@ -267,8 +263,6 @@ TPML:
 Readmoo:
     url: "https://share.readmoo.com/search/keyword?q="
     languages:
-        - "en"
-        - "en-US"
         - "zh"
         - "zh-TW"
         - "zh-HK"
