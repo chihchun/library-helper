@@ -63,7 +63,7 @@ goodreads.com:
         metadata:
             title: "//meta[@property='og:title']/@content"
             authors: "//a[@class='authorName']/span[@itemprop='name']"
-            isdn: "//meta[@property='books:isbn']/@content"
+            isbn: "//meta[@property='books:isbn']/@content"
 
 kobo.com:
     matches:
@@ -72,7 +72,7 @@ kobo.com:
     metadata:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
-        origtitle: '//span[contains(@class, 'subtitle')]'
+        origtitle: "//span[contains(@class, 'subtitle')]"
 
 play.google.com:
     matches:
@@ -191,9 +191,9 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
                 var html = `<div>${service}: `;
                 keywords.forEach(function(key) {
                     if(data[key] != undefined) {
-                        data[key].forEach(function(keyword) {
-                            var href = url + encodeURI(keyword);
-                            html += `<a href="${href}" target="_blank">${keyword}</a> `;
+                        data[key].forEach(function(val) {
+                            var href = url + encodeURI(val);
+                            html += `<a href="${href}" target="_blank">${val}</a> `;
                         })
                     }
                 })
