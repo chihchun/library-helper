@@ -11,6 +11,7 @@
 // @match        https://www.taaze.tw/goods/*
 // @match        https://www.goodreads.com/book/show/*
 // @match        https://play.google.com/store/books/details/*
+// @match        https://www.amazon.cn/gp/product/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -76,9 +77,17 @@ play.google.com:
         - "https://play.google.com/store/books/details/*"
     type: 'JSON-LD'
     metadata:
+amazon.cn:
+    matches:
+        - "https://www.amazon.cn/gp/product/*"
+    type: 'XPATH'
+    metadata:
+        title: "//span[@id='ebooksProductTitle']"
+        authors: "//span[contains(@class,'author')]/a"
+        asin: "//form[@id='sendSample']/input[@name="ASIN.0"]/@value"
 `;
 
-var keywords = ['title', 'authors', 'origtitle', 'isbn'];
+var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
 var urlsforsearch = {
     "博客來": "https://search.books.com.tw/search/query/key/",
     "Kobo": "https://www.kobo.com/tw/zh/search?query=",
