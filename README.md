@@ -1,8 +1,12 @@
 # 書蟲小幫手
 
-自動擷取網頁中的書籍詮釋資料，並顯示出其他圖書館或書店的搜尋連結。
+自動擷取網頁中的書籍詮釋資料，並顯示一個浮動視窗提供其他圖書館或書店的搜尋連結。
 
-目前支援
+## 安裝 
+- https://greasyfork.org/en/scripts/391010-library-helper
+- https://github.com/chihchun/library-helper/raw/master/readerhelper.user.js
+
+## 目前支援
 
 - [Amazon.com](https://www.amazon.com/)
 - [Goodreads](https://www.goodreads.com/)
@@ -17,6 +21,6 @@
 - [臺北市立圖書館館藏查詢系統](http://book.tpml.edu.tw/webpac/webpacIndex.jsp)
 - [豆瓣读书](https://book.douban.com/)
 
-安裝 
-- https://greasyfork.org/en/scripts/391010-library-helper
-- https://github.com/chihchun/library-helper/raw/master/readerhelper.user.js
+## 圖例
+![demo on books.com.tw](https://github.com/chihchun/library-helper/blob/master/screenshots/books.com.tw.png?raw=true)
+![demo on goodreads](https://github.com/chihchun/library-helper/blob/master/screenshots/goodreads.png?raw=true)
