@@ -131,7 +131,7 @@ var urlsforsearch = {
     right: 0px;
 
     width: 30vw;
-    height: 50vh;
+    max-height: 50vh;
     padding: 10px;
 
     overflow-x: scroll;
