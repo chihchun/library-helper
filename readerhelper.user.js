@@ -72,6 +72,7 @@ kobo.com:
     metadata:
         title: '//span[@class="title product-field"]'
         authors: '//a[@class="contributor-name"]'
+        origtitle: '//span[contains(@class, 'subtitle')]'
 
 play.google.com:
     matches:
