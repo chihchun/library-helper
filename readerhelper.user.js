@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Reader Helper
+// @name         Library Helper
 // @namespace    https://greasyfork.org/en/users/263753-chihchun
 // @version      0.1
-// @description  Reader Helper
+// @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        https://www.books.com.tw/products/*
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
