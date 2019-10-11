@@ -12,6 +12,8 @@
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
+// @license      MIT; https://github.com/chihchun/library-helper/blob/master/LICENSE
+// @supportURL   https://github.com/chihchun/library-helper/issues
 // ==/UserScript==
 
 (function() {
