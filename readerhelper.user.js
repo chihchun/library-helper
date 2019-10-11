@@ -9,6 +9,7 @@
 // @match        https://books.google.com.tw/books*
 // @match        https://www.kobo.com/tw/zh/ebook*
 // @match        https://www.taaze.tw/goods/*
+// @match        https://www.goodreads.com/book/show/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -56,6 +57,13 @@ taaze.tw:
         title: "//meta[@name='title']/@content"
         isbn: "//meta[@property='books:isbn']/@content"
         authors: "//div[@class='authorBrand']//a[contains(@href,'rwd_searchResult.html?keyType%5B%5D=2')]"
+goodreads.com:
+    matches:
+        - "https://www.goodreads.com/book/show/*"
+    metadata:
+        title: "//meta[@property='og:title']/@content"
+        authors: "//a[@class='authorName']/span[@itemprop='name']"
+        isdn: "//meta[@property='books:isbn']/@content"
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn'];
