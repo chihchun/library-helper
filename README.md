@@ -10,4 +10,4 @@
 - [Kobo.com](https://www.kobo.com/tw/zh)
 - [TAAZE 讀冊生活](https://www.taaze.tw/index.html)
 
-安裝 https://github.com/chihchun/library-helper/raw/master/readerhelper.user.js
+安裝 https://greasyfork.org/en/scripts/391010-library-helper
