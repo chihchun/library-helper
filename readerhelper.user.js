@@ -22,6 +22,7 @@
 // @match        https://www.taaze.tw/goods/*
 // @match        https://www.taaze.tw/usedList.html?oid=*
 // @match        https://www.babelio.com/livres/*
+// @match        http://bibliotheque.ville-bobigny.fr/detail-d-une-notice/notice/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -67,6 +68,14 @@ babelio.com:
     metadata:
         title: "//h1"
         authors: "//span[@itemprop='name']"
+
+bibliotheque.ville-bobigny.fr:
+    matches:
+        - "http://bibliotheque.ville-bobigny.fr/detail-d-une-notice/notice/*"
+    type: 'XPATH'
+    metadata:
+        title: "//title"
+        authros: "//a[contains(@class, 'ntc-link-auteur')]"
 
 books.com.tw:
     matches: 
@@ -153,17 +162,144 @@ tpml.edu.tw:
 
 `;
     var search_yaml = `
-博客來: "https://search.books.com.tw/search/query/key/"
-Kobo: "https://www.kobo.com/tw/zh/search?query="
-GooglePlay: "https://play.google.com/store/search?c=books&q="
-AmazonCN: "https://www.amazon.cn/s?rh=n%3A116169071&k="
-豆瓣: "https://search.douban.com/book/subject_search?search_text="
-Goodreads: "https://www.goodreads.com/search?q="
-Google: "https://www.google.com/search?tbm=bks&q="
-TPML: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
-讀冊: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
-Readmoo: "https://share.readmoo.com/search/keyword?q="
-Amazon: "https://www.amazon.com/s?i=digital-text&k="
+博客來:
+    url: "https://search.books.com.tw/search/query/key/"
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+Kobo:
+    url: "https://www.kobo.com/tw/zh/search?query="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+GooglePlay:
+    url: "https://play.google.com/store/search?c=books&q="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+AmazonCN:
+    url: "https://www.amazon.cn/s?rh=n%3A116169071&k="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+豆瓣:
+    url: "https://search.douban.com/book/subject_search?search_text="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+Goodreads:
+    url: "https://www.goodreads.com/search?q="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+Google:
+    url: "https://www.google.com/search?tbm=bks&q="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+TPML:
+    url: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+讀冊:
+    url: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+Readmoo:
+    url: "https://share.readmoo.com/search/keyword?q="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+Amazon:
+    url: "https://www.amazon.com/s?i=digital-text&k="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+Babelio:
+    url: "https://www.babelio.com/resrecherche.php?Recherche="
+    languages:
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
+
+Bobigny:
+    url: "http://bibliotheque.ville-bobigny.fr/recherche-catalogue/recherche-simple/simple/Mots%20Notice/0/"
+    languages:
+        - "fr"
+        - "fr-ca"
+        - "fr-fr"
 `;
 
 var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
@@ -224,8 +360,13 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             console.debug(data);
             var dialog = inject();
             var urlsforsearch = jsyaml.load(search_yaml);
+
             for (var service in urlsforsearch) {
-                var url = urlsforsearch[service];
+                if(!isPreferLang(urlsforsearch[service]['languages'])) {
+                    continue;
+                }
+
+                var url = urlsforsearch[service]['url'];
                 var html = `<div>${service}: `;
                 keywords.forEach(function(key) {
                     if(data[key] != undefined) {
@@ -241,6 +382,16 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
         }
     }
 
+    function isPreferLang(offers) {
+        var languages = window.navigator.userLanguage || window.navigator.languages || [window.navigator.language];
+        var ret = false;
+        languages.forEach(function(lang) {
+            if(offers.includes(lang)) {
+                ret = true;
+            }
+        })
+        return ret;
+    }
 
     function inject () {
         var div = document.createElement('div');
