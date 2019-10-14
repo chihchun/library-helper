@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Library Helper
-// @namespace    https://greasyfork.org/en/users/263753-chihchun
+// @namespace    https://github.com/chihchun
 // @version      1.2
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
@@ -27,6 +27,9 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
 // @license      MIT; https://github.com/chihchun/library-helper/blob/master/LICENSE
+// @copyright    2019, chihchun (https://github.com/chihchun)
+// @updateURL    https://openuserjs.org/meta/chihchun/Library_Helper.meta.js
+// @downloadURL  https://openuserjs.org/install/chihchun/Library_Helper.min.user.js
 // @supportURL   https://github.com/chihchun/library-helper/issues
 // ==/UserScript==
 
