@@ -255,6 +255,13 @@ TPML:
         - "zh-HK"
         - "zh-CN"
 
+TPMLHyread:
+    url: "https://tpml.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+
 讀冊:
     url: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
     languages:
