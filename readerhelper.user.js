@@ -23,6 +23,7 @@
 // @match        https://www.taaze.tw/usedList.html?oid=*
 // @match        https://www.babelio.com/livres/*
 // @match        http://bibliotheque.ville-bobigny.fr/detail-d-une-notice/notice/*
+// @match        https://webpac.tphcc.gov.tw/webpac/content.cfm*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -163,8 +164,18 @@ tpml.edu.tw:
         title: "//h3"
         authors: "//a[contains(@href,'search_field=PN')]"
 
+webpac.tphcc.gov.tw:
+    matches:
+        - "https://webpac.tphcc.gov.tw/webpac/content.cfm*"
+    type: 'XPATH'
+    metadata:
+        title: "//h2"
+        authors: "//div[@class='detail simple']/p[1]"
+        isbn: "//div[@class='detail simple']/p[4]"
+
 `;
-    var search_yaml = `
+
+var search_yaml = `
 博客來:
     url: "https://search.books.com.tw/search/query/key/"
     languages:
@@ -245,7 +256,7 @@ Google:
         - "fr-ca"
         - "fr-fr"
 
-TPML:
+北市圖書館:
     url: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
     languages:
         - "en"
@@ -255,12 +266,29 @@ TPML:
         - "zh-HK"
         - "zh-CN"
 
-TPMLHyread:
+北市圖書館Hyread:
     url: "https://tpml.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
     languages:
         - "zh"
         - "zh-TW"
         - "zh-HK"
+
+新北市圖書館:
+    url: "https://webpac.tphcc.gov.tw/webpac/search.cfm?m=ss&t0=k&c0=and&k0="
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+新北市Hyread:
+        url: "https://tphcc.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+        languages:
+            - "zh"
+            - "zh-TW"
+            - "zh-HK"
 
 讀冊:
     url: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
@@ -492,6 +520,7 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             }
             // fixing up content
             text = text.replace("ISBN：", "").
+                    replace("作者 :", "").
                     replace("出版日期：", "");
             texts.push(text);
         }
