@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.3
+// @version      1.4
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -285,6 +285,13 @@ Google:
 
 新北市Hyread:
         url: "https://tphcc.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+        languages:
+            - "zh"
+            - "zh-TW"
+            - "zh-HK"
+
+國立臺灣圖書館Hyread:
+        url: "https://ntledu.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
         languages:
             - "zh"
             - "zh-TW"
