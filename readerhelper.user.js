@@ -284,25 +284,25 @@ Google:
         - "zh-CN"
 
 新北市Hyread:
-        url: "https://tphcc.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
-        languages:
-            - "zh"
-            - "zh-TW"
-            - "zh-HK"
+    url: "https://tphcc.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
 
 國立臺灣圖書館Hyread:
-        url: "https://ntledu.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
-        languages:
-            - "zh"
-            - "zh-TW"
-            - "zh-HK"
+    url: "https://ntledu.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
 
 台灣雲端書庫:
-        url: "https://www.ebookservice.tw/#search/"
-        languages:
-            - "zh"
-            - "zh-TW"
-            - "zh-HK"
+    url: "https://www.ebookservice.tw/#search/"
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
 
 讀冊:
     url: "https://www.taaze.tw/rwd_searchResult.html?keyword%5B%5D="
