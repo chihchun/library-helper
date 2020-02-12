@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.5
+// @version      1.6
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -10,6 +10,7 @@
 // @match        https://books.google.com/books*
 // @match        https://books.google.fr/books*
 // @match        https://play.google.com/store/books/details/*
+// @match        https://play.google.com/store/books/details?id=*
 // @match        https://share.readmoo.com/book/*
 // @match        https://readmoo.com/book/*
 // @match        https://www.amazon.cn/dp/*
@@ -126,6 +127,7 @@ kobo.com:
 play.google.com:
     matches:
         - "https://play.google.com/store/books/details/*"
+        - "https://play.google.com/store/books/details?id=*"
     type: 'JSON-LD'
     metadata:
 
