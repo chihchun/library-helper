@@ -5,6 +5,7 @@
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
+// @match        https://book.tpml.edu.tw/webpac/bookDetail.do*
 // @match        https://book.douban.com/subject/*
 // @match        https://books.google.com.tw/books*
 // @match        https://books.google.com/books*
@@ -161,6 +162,7 @@ taaze.tw/used:
 tpml.edu.tw:
     matches:
         - "http://book.tpml.edu.tw/webpac/bookDetail.do*"
+        - "https://book.tpml.edu.tw/webpac/bookDetail.do*"
     type: 'XPATH'
     metadata:
         title: "//h3"
@@ -259,7 +261,7 @@ Google:
         - "fr-fr"
 
 北市圖書館:
-    url: "http://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
+    url: "https://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
     languages:
         - "en"
         - "en-US"
