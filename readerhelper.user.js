@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.8
+// @version      1.9
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -277,6 +277,20 @@ Google:
         - "zh-TW"
         - "zh-HK"
 
+北市圖書館UDN讀書館:
+    url: "https://reading.udn.com/udnlib/tpml/booksearch?sort=all&opt=all&kw="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+
+台灣雲端書庫:
+    url: "https://www.ebookservice.tw/#search/"
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+
 新北市圖書館:
     url: "https://webpac.tphcc.gov.tw/webpac/search.cfm?m=ss&t0=k&c0=and&k0="
     languages:
@@ -287,8 +301,15 @@ Google:
         - "zh-HK"
         - "zh-CN"
 
-新北市Hyread:
+新北市圖書館Hyread:
     url: "https://tphcc.ebook.hyread.com.tw/searchList.jsp?search_field=FullText&search_input="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+
+新北市圖書館UDN讀書館:
+    url: "https://reading.udn.com/udnlib/tpc/booksearch?sort=all&opt=all&kw="
     languages:
         - "zh"
         - "zh-TW"
@@ -301,8 +322,8 @@ Google:
         - "zh-TW"
         - "zh-HK"
 
-台灣雲端書庫:
-    url: "https://www.ebookservice.tw/#search/"
+國立臺灣圖書館UDN讀書館:
+    url: "https://reading.udn.com/udnlib/ncl/booksearch?sort=all&opt=all&kw="
     languages:
         - "zh"
         - "zh-TW"
@@ -549,4 +570,3 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
         return texts;
     }
 })();
-
