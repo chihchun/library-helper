@@ -5,7 +5,6 @@
 ## 安裝連結
 
 請先於瀏覽器安裝 [Greasyfork](https://greasyfork.org/zh-TW) 後再點選以下安裝連結
-- https://openuserjs.org/scripts/chihchun/Library_Helper
 - https://greasyfork.org/en/scripts/391010-library-helper
 - https://github.com/chihchun/library-helper/raw/master/readerhelper.user.js
 
