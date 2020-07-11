@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.9
+// @version      1.10
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -279,6 +279,13 @@ Google:
 
 北市圖書館UDN讀書館:
     url: "https://reading.udn.com/udnlib/tpml/booksearch?sort=all&opt=all&kw="
+    languages:
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+
+北區資源中心UDN讀書館:
+    url: "https://reading.udn.com/udnlib/publiclib/booksearch?sort=all&opt=all&kw="
     languages:
         - "zh"
         - "zh-TW"
