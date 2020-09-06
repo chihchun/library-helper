@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.10
+// @version      1.11
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -393,29 +393,33 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
         var jsons = evaluate('//script[@type="application/ld+json"]');
         if(jsons.length > 0) {
             jsons.forEach(function(json) {
-                var ld = JSON.parse(json);
-                console.debug(ld);
-                if(ld['@type'] == "Book") {
-                    data['title'] = [ld['name']];
+                try {
+                    var ld = JSON.parse(json);
+                    // console.debug(ld);
+                    if(ld['@type'] == "Book") {
+                        data['title'] = [ld['name']];
 
-                    if(ld['isbn'] != undefined) {
-                        data['isbn']= [ld['isbn']];
-                    }
+                        if(ld['isbn'] != undefined) {
+                            data['isbn']= [ld['isbn']];
+                        }
 
-                    if(ld['workExample'] != undefined && ld['workExample']['isbn'] != undefined ) {
-                       data['isbn']= [ld['workExample']['isbn']];
-                    }
+                        if(ld['workExample'] != undefined && ld['workExample']['isbn'] != undefined ) {
+                        data['isbn']= [ld['workExample']['isbn']];
+                        }
 
-                    data['authors'] = [];
-                    if(ld['author'] != undefined) {
-                        if(Array.isArray(ld['author'])) {
-                            ld['author'].forEach(function (author) {
-                                data['authors'].push(author['name']);
-                            })
-                        } else {
-                            data['authors'].push(ld['author']['name']);
+                        data['authors'] = [];
+                        if(ld['author'] != undefined) {
+                            if(Array.isArray(ld['author'])) {
+                                ld['author'].forEach(function (author) {
+                                    data['authors'].push(author['name']);
+                                })
+                            } else {
+                                data['authors'].push(ld['author']['name']);
+                            }
                         }
                     }
+                } catch(err) {
+                    console.error(err, json)
                 }
             })
         }
