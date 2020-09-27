@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.11
+// @version      1.12
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -571,7 +571,8 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             // fixing up content
             text = text.replace("ISBN：", "").
                     replace("作者 :", "").
-                    replace("出版日期：", "");
+                    replace("出版日期：", "").
+                    replace(" (電子書)", "");
             const subtitles = text.split('：');
             if(subtitles.length > 1) {
                 texts.push(subtitles[0]);
