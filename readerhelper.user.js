@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.12
+// @version      1.13
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
@@ -261,7 +261,7 @@ Google:
         - "fr-fr"
 
 北市圖書館:
-    url: "https://book.tpml.edu.tw/webpac/bookSearchList.do?search_field=FullText&search_input="
+    url: "https://book.tpml.edu.tw/search?searchField=FullText&searchInput="
     languages:
         - "en"
         - "en-US"
