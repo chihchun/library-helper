@@ -106,14 +106,14 @@ books.google.com.tw:
         authors: "//a[contains(@href,'q=inauthor')]"
 
 goodreads.com:
-        matches:
-            - "https://www.goodreads.com/book/show/*"
-        type: 'XPATH'
-        metadata:
-            title: "//meta[@property='og:title']/@content"
-            authors: "//a[@class='authorName']/span[@itemprop='name']"
-            isbn: "//meta[@property='books:isbn']/@content"
-            rating: "//span[@itemprop='ratingValue']"
+    matches:
+        - "https://www.goodreads.com/book/show/*"
+    type: 'XPATH'
+    metadata:
+        title: "//meta[@property='og:title']/@content"
+        authors: "//a[@class='authorName']/span[@itemprop='name']"
+        isbn: "//meta[@property='books:isbn']/@content"
+        rating: "//span[@itemprop='ratingValue']"
 
 kobo.com:
     matches:
@@ -150,9 +150,10 @@ taaze.tw:
         origtitle: "//div[contains(@class, 'mBody')]//h2"
         isbn: "//meta[@property='books:isbn']/@content"
         authors: "//div[@class='authorBrand']//a[contains(@href,'rwd_searchResult.html?keyType%5B%5D=2')]"
+
 taaze.tw/used:
     matches:
-    - "https://www.taaze.tw/usedList.html*"
+        - "https://www.taaze.tw/usedList.html*"
     type: 'XPATH'
     metadata:
         origtitle: "//div[contains(@class, 'hide')]//div[@class='title-next']"
@@ -165,7 +166,7 @@ tpml.edu.tw:
     metadata:
         title: "//div[@class='bookdata']/h2"
         authors: "//a[contains(@href,'searchField=PN')]"
-    wait: 600
+    delaytime: 1200
 
 webpac.tphcc.gov.tw:
     matches:
@@ -423,51 +424,52 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             })
         }
 
-        // wait for page is loaded
-        let wait = 0;
-        if(data[wait] != undefined) {
-            watit = data[wait];
-        }
-        setTimeout(function() { 
-            // parse the metadata by xpath
-            for (var domain in rules) {
-                rules[domain]['matches'].forEach(function (match) {
-                    if(document.URL.match(match)) {
-                        var metadata = rules[domain]['metadata'];
+        for (var domain in rules) {
+            rules[domain]['matches'].forEach(function (match) {
+                if(document.URL.match(match)) {
+                    var metadata = rules[domain]['metadata'];
+                    // wait for page is loaded
+                    let delaytime = 0;
+                    if('delaytime' in rules[domain]) {
+                        delaytime = rules[domain]['delaytime'];
+                    }
+
+                    // wait for page content to be loaded
+                    setTimeout(function() { 
+                        // collect metadata
                         for (var key in metadata) {
                             data[key] = evaluate(metadata[key]);
                         }
-                        return;
-                    }
-                })
-            }
 
-            // Links to other websites
-            if(Object.keys(data).length > 0) {
-                console.debug(data);
-                var dialog = inject();
-                var urlsforsearch = jsyaml.load(search_yaml);
+                        // updates links to other websites
+                        if(Object.keys(data).length > 0) {
+                            console.debug(data);
+                            var dialog = inject();
+                            var urlsforsearch = jsyaml.load(search_yaml);
 
-                for (var service in urlsforsearch) {
-                    if(!isPreferLang(urlsforsearch[service]['languages'])) {
-                        continue;
-                    }
+                            for (var service in urlsforsearch) {
+                                if(!isPreferLang(urlsforsearch[service]['languages'])) {
+                                    continue;
+                                }
 
-                    var url = urlsforsearch[service]['url'];
-                    var html = `<div>${service}: `;
-                    keywords.forEach(function(key) {
-                        if(data[key] != undefined) {
-                            data[key].forEach(function(val) {
-                                var href = url + encodeURI(val);
-                                html += `<a href="${href}" target="_blank">${val}</a> `;
-                            })
+                                var url = urlsforsearch[service]['url'];
+                                var html = `<div>${service}: `;
+                                keywords.forEach(function(key) {
+                                    if(data[key] != undefined) {
+                                        data[key].forEach(function(val) {
+                                            var href = url + encodeURI(val);
+                                            html += `<a href="${href}" target="_blank">${val}</a> `;
+                                        })
+                                    }
+                                })
+                                html += "</div>";
+                                dialog.insertAdjacentHTML('beforeend', html)
+                            }
                         }
-                    })
-                    html += "</div>";
-                    dialog.insertAdjacentHTML('beforeend', html)
+                    }, delaytime);
                 }
-            }
-        }, 600);
+            });
+        }
     }
 
     function isPreferLang(offers) {
