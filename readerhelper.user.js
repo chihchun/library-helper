@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.13
+// @version      1.14
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
-// @match        http://book.tpml.edu.tw/webpac/bookDetail.do*
-// @match        https://book.tpml.edu.tw/webpac/bookDetail.do*
+// @match        https://book.tpml.edu.tw/bookDetail/*
 // @match        https://book.douban.com/subject/*
 // @match        https://books.google.com.tw/books*
 // @match        https://books.google.com/books*
@@ -161,12 +160,12 @@ taaze.tw/used:
 
 tpml.edu.tw:
     matches:
-        - "http://book.tpml.edu.tw/webpac/bookDetail.do*"
-        - "https://book.tpml.edu.tw/webpac/bookDetail.do*"
+        - "https://book.tpml.edu.tw/bookDetail/*"
     type: 'XPATH'
     metadata:
-        title: "//h3"
-        authors: "//a[contains(@href,'search_field=PN')]"
+        title: "//div[@class='bookdata']/h2"
+        authors: "//a[contains(@href,'searchField=PN')]"
+    wait: 600
 
 webpac.tphcc.gov.tw:
     matches:
@@ -424,44 +423,51 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             })
         }
 
-        // parse the metadata by xpath
-        for (var domain in rules) {
-            rules[domain]['matches'].forEach(function (match) {
-                if(document.URL.match(match)) {
-                    var metadata = rules[domain]['metadata'];
-                    for (var key in metadata) {
-                        data[key] = evaluate(metadata[key]);
-                    }
-                    return;
-                }
-            })
+        // wait for page is loaded
+        let wait = 0;
+        if(data[wait] != undefined) {
+            watit = data[wait];
         }
-
-        // Links to other websites
-        if(Object.keys(data).length > 0) {
-            console.debug(data);
-            var dialog = inject();
-            var urlsforsearch = jsyaml.load(search_yaml);
-
-            for (var service in urlsforsearch) {
-                if(!isPreferLang(urlsforsearch[service]['languages'])) {
-                    continue;
-                }
-
-                var url = urlsforsearch[service]['url'];
-                var html = `<div>${service}: `;
-                keywords.forEach(function(key) {
-                    if(data[key] != undefined) {
-                        data[key].forEach(function(val) {
-                            var href = url + encodeURI(val);
-                            html += `<a href="${href}" target="_blank">${val}</a> `;
-                        })
+        setTimeout(function() { 
+            // parse the metadata by xpath
+            for (var domain in rules) {
+                rules[domain]['matches'].forEach(function (match) {
+                    if(document.URL.match(match)) {
+                        var metadata = rules[domain]['metadata'];
+                        for (var key in metadata) {
+                            data[key] = evaluate(metadata[key]);
+                        }
+                        return;
                     }
                 })
-                html += "</div>";
-                dialog.insertAdjacentHTML('beforeend', html)
             }
-        }
+
+            // Links to other websites
+            if(Object.keys(data).length > 0) {
+                console.debug(data);
+                var dialog = inject();
+                var urlsforsearch = jsyaml.load(search_yaml);
+
+                for (var service in urlsforsearch) {
+                    if(!isPreferLang(urlsforsearch[service]['languages'])) {
+                        continue;
+                    }
+
+                    var url = urlsforsearch[service]['url'];
+                    var html = `<div>${service}: `;
+                    keywords.forEach(function(key) {
+                        if(data[key] != undefined) {
+                            data[key].forEach(function(val) {
+                                var href = url + encodeURI(val);
+                                html += `<a href="${href}" target="_blank">${val}</a> `;
+                            })
+                        }
+                    })
+                    html += "</div>";
+                    dialog.insertAdjacentHTML('beforeend', html)
+                }
+            }
+        }, 600);
     }
 
     function isPreferLang(offers) {
