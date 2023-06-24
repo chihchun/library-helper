@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.15
+// @version      1.16
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        https://book.tpml.edu.tw/bookDetail/*
@@ -25,6 +25,7 @@
 // @match        https://www.babelio.com/livres/*
 // @match        http://bibliotheque.ville-bobigny.fr/detail-d-une-notice/notice/*
 // @match        https://webpac.tphcc.gov.tw/webpac/content.cfm*
+// @match        https://www.eslite.com/product/*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js
 // @run-at       document-idle
@@ -104,6 +105,15 @@ books.google.com.tw:
     metadata:
         title: "//meta[@property='og:title']/@content"
         authors: "//a[contains(@href,'q=inauthor')]"
+
+eslite.com:
+    matches:
+        - "https://www.eslite.com/product/*"
+    type: 'XPATH'
+    metadata:
+        title: "//div[@class='product-information']//h1"
+        authors: "//a[contains(@href,'/search?author')]"
+    delaytime: 2000
 
 goodreads.com:
     matches:
