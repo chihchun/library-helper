@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.14
+// @version      1.15
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        https://book.tpml.edu.tw/bookDetail/*
@@ -182,6 +182,16 @@ webpac.tphcc.gov.tw:
 var search_yaml = `
 博客來:
     url: "https://search.books.com.tw/search/query/key/"
+    languages:
+        - "en"
+        - "en-US"
+        - "zh"
+        - "zh-TW"
+        - "zh-HK"
+        - "zh-CN"
+
+誠品線上:
+    url: "https://www.eslite.com/Search?keyword="
     languages:
         - "en"
         - "en-US"
