@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Library Helper
 // @namespace    https://github.com/chihchun
-// @version      1.16
+// @version      1.17
 // @description  A userscript that display links between different libraries and book stores.
 // @author       Rex Tsai <rex.cc.tsai@gmail.com>
 // @match        https://book.tpml.edu.tw/bookDetail/*
@@ -177,6 +177,7 @@ tpml.edu.tw:
         title: "//div[@class='bookdata']/h2"
         authors: "//a[contains(@href,'searchField=PN')]"
     delaytime: 1200
+    fixtitle: True
 
 webpac.tphcc.gov.tw:
     matches:
@@ -448,10 +449,15 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
             rules[domain]['matches'].forEach(function (match) {
                 if(document.URL.match(match)) {
                     var metadata = rules[domain]['metadata'];
+
                     // wait for page is loaded
                     let delaytime = 0;
                     if('delaytime' in rules[domain]) {
                         delaytime = rules[domain]['delaytime'];
+                    }
+                    let fixtitle = 0;
+                    if('fixtitle' in rules[domain]) {
+                        fixtitle = true;
                     }
 
                     // wait for page content to be loaded
@@ -485,6 +491,11 @@ var keywords = ['title', 'authors', 'origtitle', 'isbn', 'asin'];
                                 html += "</div>";
                                 dialog.insertAdjacentHTML('beforeend', html)
                             }
+                        }
+
+                        // fix title for soem sites.
+                        if(fixtitle) {
+                            document.title = data["title"];
                         }
                     }, delaytime);
                 }
